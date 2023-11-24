@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="LunchCheck">
+
+<head>
+    <title>Lunch Check</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        /* Add CSS styling here */
+        .message {
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body ng-controller="LunchCheckController">
+    <h1>Lunch Check</h1>
+    <input type="text" placeholder="List comma-separated items" ng-model="lunchItems">
+    <button ng-click="checkLunch()">Check If Too Much</button>
+    <div class="message" ng-show="message">{{ message }}</div>
+
+    <script>
+        // Define Angular module
+        angular.module('LunchCheck', [])
+
+        // Define LunchCheckController
+        .controller('LunchCheckController', function ($scope) {
+            $scope.checkLunch = function () {
+                if (!$scope.lunchItems || !$scope.lunchItems.trim()) {
+                    $scope.message = "Please enter data first";
+                } else {
+                    var items = $scope.lunchItems.split(',').filter(Boolean);
+                    $scope.message = items.length <= 3 ? "Enjoy!" : "Too much!";
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
